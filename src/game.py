@@ -20,5 +20,54 @@ def display_map(game_map):
         print(" ".join(row))
 
 
-# Show the game map
+# Ask the player for their name
+player_name = input("Enter your name: ")
+
+print("Welcome", player_name)
+
+# Starting player position
+player_x = 0
+player_y = 0
+
+# Gold position
+gold_x = 5
+gold_y = 5
+
+# Place human player on map
+game_map[player_y][player_x] = "H"
+
+# Place gold on map
+game_map[gold_y][gold_x] = "G"
+
+# Display map before movement
+display_map(game_map)
+
+# Ask player to move
+move = input("Move (w/a/s/d): ")
+
+# Remove old player position
+game_map[player_y][player_x] = "."
+
+# Move player right
+if move == "d":
+    player_x += 1
+
+# Move player left
+elif move == "a":
+    player_x -= 1
+
+# Move player up
+elif move == "w":
+    player_y -= 1
+
+# Move player down
+elif move == "s":
+    player_y += 1
+
+# Place updated player position
+game_map[player_y][player_x] = "H"
+
+print(player_name, "moved", move)
+
+# Display updated map
 display_map(game_map)
