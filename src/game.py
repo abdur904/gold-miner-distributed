@@ -64,6 +64,10 @@ elif move == "w":
 elif move == "s":
     player_y += 1
 
+# Check gold collection
+if player_x == gold_x and player_y == gold_y:
+    print("Gold collected")
+
 # Place updated player position
 game_map[player_y][player_x] = "H"
 
