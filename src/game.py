@@ -1,5 +1,6 @@
 import random
 import os
+import time
 import bot
 from server import log_event
 
@@ -232,3 +233,6 @@ while running:
             game_map[new_gold_y][new_gold_x] = "G"
 
             break
+
+    # Small delay for smoother gameplay
+    time.sleep(0.2)
