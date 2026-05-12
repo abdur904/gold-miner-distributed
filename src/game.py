@@ -6,7 +6,7 @@ MAP_SIZE = 20
 # Create empty game map
 game_map = []
 
-# Fill the map with empty cells
+# Fill map with empty cells
 for i in range(MAP_SIZE):
     row = []
 
@@ -41,59 +41,81 @@ player_y = 0
 gold_x = 5
 gold_y = 5
 
-# Place human player on map
-game_map[player_y][player_x] = "H"
+# Control game loop
+running = True
 
-# Place gold on map
-game_map[gold_y][gold_x] = "G"
 
-# Display map before movement
-display_map(game_map)
+# Main gameplay loop
+while running:
 
-# Ask player to move
-move = input("Move (w/a/s/d): ")
+    # Reset game map
+    game_map = []
 
-# Remove old player position
-game_map[player_y][player_x] = "."
+    # Create fresh empty map
+    for i in range(MAP_SIZE):
+        row = []
 
-# Move player right
-if move == "d":
-    player_x += 1
+        for j in range(MAP_SIZE):
+            row.append(".")
 
-# Move player left
-elif move == "a":
-    player_x -= 1
+        game_map.append(row)
 
-# Move player up
-elif move == "w":
-    player_y -= 1
+    # Place gold on map
+    game_map[gold_y][gold_x] = "G"
 
-# Move player down
-elif move == "s":
-    player_y += 1
+    # Place player on map
+    game_map[player_y][player_x] = "H"
 
-# Log movement
-log_event(player_name + " moved " + move)
+    # Display updated map
+    display_map(game_map)
 
-# Check gold collection
-if player_x == gold_x and player_y == gold_y:
-    print("Gold collected")
+    # Ask player for movement
+    move = input("Move (w/a/s/d or q to quit): ")
 
-    # Log gold collection
-    log_event(player_name + " collected gold")
+    # Quit game
+    if move == "q":
+        log_event(player_name + " exited the game")
 
-    # Increase player score
-    score += 10
+        print("Game ended")
 
-    print("Score:", score)
+        running = False
 
-    # Log score update
-    log_event("Score updated for " + player_name)
+    # Move player right
+    elif move == "d":
+        player_x += 1
 
-# Place updated player position
-game_map[player_y][player_x] = "H"
+        log_event(player_name + " moved RIGHT")
 
-print(player_name, "moved", move)
+    # Move player left
+    elif move == "a":
+        player_x -= 1
 
-# Display updated map
-display_map(game_map)
+        log_event(player_name + " moved LEFT")
+
+    # Move player up
+    elif move == "w":
+        player_y -= 1
+
+        log_event(player_name + " moved UP")
+
+    # Move player down
+    elif move == "s":
+        player_y += 1
+
+        log_event(player_name + " moved DOWN")
+
+    # Check gold collection
+    if player_x == gold_x and player_y == gold_y:
+
+        print("Gold collected")
+
+        # Increase score
+        score += 10
+
+        # Log gold collection
+        log_event(player_name + " collected gold")
+
+        # Log score update
+        log_event("Score updated for " + player_name)
+
+        print("Score:", score)
