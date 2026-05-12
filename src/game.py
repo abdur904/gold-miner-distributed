@@ -50,6 +50,19 @@ def simulate_lag():
     time.sleep(lag_time)
 
 
+# Simulate lost message in distributed communication
+def simulate_lost_message():
+
+    # Randomly decide if a message is lost
+    message_lost = random.choice([True, False, False])
+
+    # Log simulated message loss
+    if message_lost:
+        log_event("Simulated lost message detected")
+
+    return message_lost
+
+
 # Ask the player for their name
 player_name = input("Enter your name: ")
 
@@ -115,6 +128,16 @@ while running:
 
     # Simulate distributed lag after movement input
     simulate_lag()
+
+    # Simulate lost message after movement input
+    if simulate_lost_message():
+
+        print("Movement message lost. Waiting for next update.")
+
+        log_event(player_name + " movement message was lost")
+
+        # Skip this turn to represent a lost movement update
+        continue
 
     # Remove old player position
     game_map[player_y][player_x] = "."
