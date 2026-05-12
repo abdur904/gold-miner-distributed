@@ -35,6 +35,9 @@ log_event(player_name + " joined the game")
 # Player score
 score = 0
 
+# Bot score
+bot_score = 0
+
 # Starting player position
 player_x = 0
 player_y = 0
@@ -79,9 +82,10 @@ while running:
     # Place player on map
     game_map[player_y][player_x] = "H"
 
-    # Display player score
+    # Display player and bot scores
     print("Player:", player_name)
-    print("Score:", score)
+    print("Player Score:", score)
+    print("Bot Score:", bot_score)
 
     # Display updated map
     display_map(game_map)
@@ -94,7 +98,8 @@ while running:
         log_event(player_name + " exited the game")
 
         print("Game ended")
-        print("Final Score:", score)
+        print("Final Player Score:", score)
+        print("Final Bot Score:", bot_score)
 
         running = False
 
@@ -157,7 +162,7 @@ while running:
             # Log score update
             log_event("Score updated for " + player_name)
 
-            print("Score:", score)
+            print("Player Score:", score)
 
             # Remove collected gold
             gold_positions.remove(gold)
@@ -177,8 +182,16 @@ while running:
 
             print("Bot collected gold")
 
+            # Increase bot score
+            bot_score += 10
+
             # Log bot gold collection
             log_event("Bot_1 collected gold")
+
+            # Log bot score update
+            log_event("Score updated for Bot_1")
+
+            print("Bot Score:", bot_score)
 
             # Remove collected gold
             gold_positions.remove(gold)
