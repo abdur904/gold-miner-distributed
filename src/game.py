@@ -1,3 +1,4 @@
+import random
 from server import log_event
 
 # Size of the 2D game map
@@ -37,9 +38,16 @@ score = 0
 player_x = 0
 player_y = 0
 
-# Gold position
-gold_x = 5
-gold_y = 5
+# Store multiple gold positions
+gold_positions = []
+
+# Generate 3 random gold objects
+for i in range(3):
+
+    gold_x = random.randint(0, MAP_SIZE - 1)
+    gold_y = random.randint(0, MAP_SIZE - 1)
+
+    gold_positions.append((gold_x, gold_y))
 
 # Control game loop
 running = True
@@ -60,11 +68,16 @@ while running:
 
         game_map.append(row)
 
-    # Place gold on map
-    game_map[gold_y][gold_x] = "G"
+    # Place all gold objects on map
+    for gold in gold_positions:
+        game_map[gold[1]][gold[0]] = "G"
 
     # Place player on map
     game_map[player_y][player_x] = "H"
+
+    # Display player score
+    print("Player:", player_name)
+    print("Score:", score)
 
     # Display updated map
     display_map(game_map)
@@ -115,35 +128,40 @@ while running:
     if player_x < 0:
         player_x = 0
 
-        log_event(player_name + " reached left boundary")
-
     elif player_x >= MAP_SIZE:
         player_x = MAP_SIZE - 1
-
-        log_event(player_name + " reached right boundary")
 
     if player_y < 0:
         player_y = 0
 
-        log_event(player_name + " reached top boundary")
-
     elif player_y >= MAP_SIZE:
         player_y = MAP_SIZE - 1
 
-        log_event(player_name + " reached bottom boundary")
-
     # Check gold collection
-    if player_x == gold_x and player_y == gold_y:
+    for gold in gold_positions:
 
-        print("Gold collected")
+        if player_x == gold[0] and player_y == gold[1]:
 
-        # Increase score
-        score += 10
+            print("Gold collected")
 
-        # Log gold collection
-        log_event(player_name + " collected gold")
+            # Increase player score
+            score += 10
 
-        # Log score update
-        log_event("Score updated for " + player_name)
+            # Log gold collection
+            log_event(player_name + " collected gold")
 
-        print("Score:", score)
+            # Log score update
+            log_event("Score updated for " + player_name)
+
+            print("Score:", score)
+
+            # Remove collected gold
+            gold_positions.remove(gold)
+
+            # Generate replacement gold
+            new_gold_x = random.randint(0, MAP_SIZE - 1)
+            new_gold_y = random.randint(0, MAP_SIZE - 1)
+
+            gold_positions.append((new_gold_x, new_gold_y))
+
+            break
