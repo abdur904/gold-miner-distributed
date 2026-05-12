@@ -1,3 +1,5 @@
+from server import log_event
+
 # Size of the 2D game map
 MAP_SIZE = 20
 
@@ -24,6 +26,12 @@ def display_map(game_map):
 player_name = input("Enter your name: ")
 
 print("Welcome", player_name)
+
+# Log player connection
+log_event(player_name + " joined the game")
+
+# Player score
+score = 0
 
 # Starting player position
 player_x = 0
@@ -64,9 +72,23 @@ elif move == "w":
 elif move == "s":
     player_y += 1
 
+# Log movement
+log_event(player_name + " moved " + move)
+
 # Check gold collection
 if player_x == gold_x and player_y == gold_y:
     print("Gold collected")
+
+    # Log gold collection
+    log_event(player_name + " collected gold")
+
+    # Increase player score
+    score += 10
+
+    print("Score:", score)
+
+    # Log score update
+    log_event("Score updated for " + player_name)
 
 # Place updated player position
 game_map[player_y][player_x] = "H"
