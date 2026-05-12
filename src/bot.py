@@ -11,3 +11,11 @@ print(bot_name, "connected")
 
 # Log bot connection
 log_event(bot_name + " connected")
+
+# Move bot left
+bot_x -= 1
+
+print(bot_name, "moved LEFT")
+
+# Log bot movement
+log_event(bot_name + " moved LEFT")
