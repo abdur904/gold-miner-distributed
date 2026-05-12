@@ -234,5 +234,25 @@ while running:
 
             break
 
+    # Log current game state summary for server-side monitoring
+    log_event(
+        "State update - "
+        + player_name
+        + " position=("
+        + str(player_x)
+        + ","
+        + str(player_y)
+        + "), "
+        + bot.bot_name
+        + " position=("
+        + str(bot.bot_x)
+        + ","
+        + str(bot.bot_y)
+        + "), Player Score="
+        + str(score)
+        + ", Bot Score="
+        + str(bot_score)
+    )
+
     # Small delay for smoother gameplay
     time.sleep(0.2)
