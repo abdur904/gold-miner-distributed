@@ -1,4 +1,5 @@
 import random
+import os
 from server import log_event
 from bot import bot_x, bot_y
 
@@ -16,6 +17,11 @@ for i in range(MAP_SIZE):
         row.append(".")
 
     game_map.append(row)
+
+
+# Clear terminal screen for better game display
+def clear_screen():
+    os.system("cls" if os.name == "nt" else "clear")
 
 
 # Display the current game map
@@ -59,6 +65,9 @@ running = True
 
 # Main gameplay loop
 while running:
+
+    # Clear terminal before displaying new game state
+    clear_screen()
 
     # Reset game map every turn
     game_map = []
