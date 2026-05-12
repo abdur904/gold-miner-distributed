@@ -1,5 +1,6 @@
 import random
 from server import log_event
+from bot import bot_x, bot_y
 
 # Size of the 2D game map
 MAP_SIZE = 20
@@ -72,6 +73,9 @@ while running:
     for gold in gold_positions:
         game_map[gold[1]][gold[0]] = "G"
 
+    # Place bot on map
+    game_map[bot_y][bot_x] = "B"
+
     # Place player on map
     game_map[player_y][player_x] = "H"
 
@@ -137,7 +141,7 @@ while running:
     elif player_y >= MAP_SIZE:
         player_y = MAP_SIZE - 1
 
-    # Check gold collection
+    # Check player gold collection
     for gold in gold_positions:
 
         if player_x == gold[0] and player_y == gold[1]:
@@ -154,6 +158,27 @@ while running:
             log_event("Score updated for " + player_name)
 
             print("Score:", score)
+
+            # Remove collected gold
+            gold_positions.remove(gold)
+
+            # Generate replacement gold
+            new_gold_x = random.randint(0, MAP_SIZE - 1)
+            new_gold_y = random.randint(0, MAP_SIZE - 1)
+
+            gold_positions.append((new_gold_x, new_gold_y))
+
+            break
+
+    # Check bot gold collection
+    for gold in gold_positions:
+
+        if bot_x == gold[0] and bot_y == gold[1]:
+
+            print("Bot collected gold")
+
+            # Log bot gold collection
+            log_event("Bot_1 collected gold")
 
             # Remove collected gold
             gold_positions.remove(gold)
