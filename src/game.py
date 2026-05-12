@@ -33,6 +33,23 @@ def display_map(game_map):
         print(" ".join(row))
 
 
+# Simulate distributed network lag
+def simulate_lag():
+
+    # Generate random lag time
+    lag_time = random.uniform(0.1, 0.5)
+
+    # Log lag simulation
+    log_event(
+        "Simulated network lag: "
+        + str(round(lag_time, 2))
+        + " seconds"
+    )
+
+    # Pause execution temporarily
+    time.sleep(lag_time)
+
+
 # Ask the player for their name
 player_name = input("Enter your name: ")
 
@@ -95,6 +112,9 @@ while running:
 
     # Ask player for movement
     move = input("Move (w/a/s/d or q to quit): ")
+
+    # Simulate distributed lag after movement input
+    simulate_lag()
 
     # Remove old player position
     game_map[player_y][player_x] = "."
