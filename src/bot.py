@@ -8,33 +8,44 @@ bot_name = "Bot_1"
 bot_x = 10
 bot_y = 10
 
-# Display bot connection message
-print(bot_name, "connected")
 
-# Log bot connection on server side
-log_event(bot_name + " connected")
+# Update bot movement
+def move_bot():
 
-# Select random movement direction
-direction = random.choice(["LEFT", "RIGHT", "UP", "DOWN"])
+    global bot_x
+    global bot_y
 
-# Move bot left
-if direction == "LEFT":
-    bot_x -= 1
+    # Select random movement direction
+    direction = random.choice(["LEFT", "RIGHT", "UP", "DOWN"])
 
-# Move bot right
-elif direction == "RIGHT":
-    bot_x += 1
+    # Move bot left
+    if direction == "LEFT":
+        bot_x -= 1
 
-# Move bot up
-elif direction == "UP":
-    bot_y -= 1
+    # Move bot right
+    elif direction == "RIGHT":
+        bot_x += 1
 
-# Move bot down
-elif direction == "DOWN":
-    bot_y += 1
+    # Move bot up
+    elif direction == "UP":
+        bot_y -= 1
 
-# Display bot movement
-print(bot_name, "moved", direction)
+    # Move bot down
+    elif direction == "DOWN":
+        bot_y += 1
 
-# Log bot movement
-log_event(bot_name + " moved " + direction)
+    # Prevent bot from moving outside the game map
+    if bot_x < 0:
+        bot_x = 0
+
+    elif bot_x >= 20:
+        bot_x = 19
+
+    if bot_y < 0:
+        bot_y = 0
+
+    elif bot_y >= 20:
+        bot_y = 19
+
+    # Log bot movement
+    log_event(bot_name + " moved " + direction)
