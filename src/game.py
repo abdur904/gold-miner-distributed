@@ -151,9 +151,23 @@ while running:
     player_data["y"] = player_y
     player_data["score"] = score
 
-    bot.move_bot()
+    # Move smarter bot toward nearby gold
+    bot.move_bot(gold_positions)
 
+    # Clear whole map before redraw
+    for y in range(MAP_SIZE):
+
+        for x in range(MAP_SIZE):
+            game_map[y][x] = "."
+
+    # Redraw all gold positions
+    for gold in gold_positions:
+        game_map[gold[1]][gold[0]] = "G"
+
+    # Draw updated bot position
     game_map[bot.bot_y][bot.bot_x] = "B"
+
+    # Draw updated player position
     game_map[player_y][player_x] = "H"
 
     for gold in gold_positions:
