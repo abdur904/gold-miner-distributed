@@ -1,27 +1,32 @@
+import zmq
 from datetime import datetime
 
-# Store server activity logs
 server_logs = []
 
+context = zmq.Context()
+socket = context.socket(zmq.PAIR)
+socket.bind("tcp://*:5555")
 
-# Add activity message to server log
+
 def log_event(message):
     current_time = datetime.now().strftime("%H:%M:%S")
-
     log_message = "[" + current_time + "] " + message
-
     server_logs.append(log_message)
-
     print("[SERVER LOG]", log_message)
 
 
-# Start distributed game server
-print("Server started")
+def start_server():
+    log_event("Distributed game server started on port 5555")
+
+    while True:
+        try:
+            message = socket.recv_string()
+            log_event("Received: " + message)
+
+        except KeyboardInterrupt:
+            log_event("Server shutting down")
+            break
 
 
-# Example distributed events
-log_event("Human player connected")
-log_event("Bot connected")
-log_event("Player moved RIGHT")
-log_event("Gold collected")
-log_event("Player score updated")
+if __name__ == "__main__":
+    start_server()
