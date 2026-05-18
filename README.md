@@ -56,7 +56,7 @@ gold-miner-distributed/
 │   ├── high_level_class_diagram.png
 │   ├── normal_gameplay_sequence_diagram.png
 │   └── lost_message_reconnect_sequence_diagram.png
-└── docs/
+
 ```
 
 ## Requirements
